@@ -1,0 +1,33 @@
+plugins {
+    id "application"
+}
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+ext {
+    assertj_version = "3.16.0"
+    archUnit_version = "0.13.1"
+    junit_version = "5.6.2"
+    log4j_version = "2.13.2"
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.apache.logging.log4j:log4j-api:${log4j_version}"
+    compile "org.apache.logging.log4j:log4j-core:${log4j_version}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_version}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_version}"
+
+    testCompile "org.assertj:assertj-core:${assertj_version}"
+    testCompile "com.tngtech.archunit:archunit-junit5:${archUnit_version}"
+}
+
+test {
+    useJUnitPlatform()
+}
