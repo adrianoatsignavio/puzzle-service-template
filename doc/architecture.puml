@@ -1,0 +1,44 @@
+@startuml
+
+package "Core" {
+	[Domain] as domain
+	[Usecase] as usecase
+}
+
+package "Application" {
+	[AppStarter]
+	[Common] as common
+}
+
+package "Adapters" {
+	frame "rest" {
+		[controller] as rest_controller
+		[mapper] as rest_mapper
+		[dto] as rest_dto
+	}
+	frame "persistance" {
+		[mapper] as persistance_mapper
+		[dto] as persistance_model
+		[repository] as persistance_repository
+	}
+	frame "messaging" {
+		[messages] as messages
+		[publisher]
+		[mapper] as messaging_mapper
+	}
+}
+
+domain <-- rest_mapper
+domain <-- persistance_mapper
+domain <-- messaging_mapper
+
+rest_controller -up-> usecase
+publisher -up-> usecase
+persistance_repository -up-> usecase
+
+rest_mapper --> common
+persistance_mapper --> common
+messaging_mapper --> common
+
+
+@enduml
