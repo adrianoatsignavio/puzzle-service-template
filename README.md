@@ -20,3 +20,16 @@ Line endings: `git config core.autocrlf input`
 
 # Important versions
 Gradle `6.2`  
+
+# Notes about packages
+Each adapter has at least following packages:
+- objects dedicated to communicate to underlying technology
+    - **dto**
+        - Data Transfer Objects which are responsible to communicate with underlying adapter technology. 
+            - e.g. dto for REST communication, for storage persistence  
+    - **message**  
+        - Transfer objects which deal with event based systems
+            - e.g. message for message queuing             
+- **mapper**
+    - Dedicated implementation of mapper which maps entity/event from core
+    to adapter specific dto/message
