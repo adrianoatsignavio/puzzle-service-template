@@ -17,3 +17,6 @@ There is an example of ADR to follow similar structure for further ADRs.
   
 # Git configuration
 Line endings: `git config core.autocrlf input`
+
+# Important versions
+Gradle `6.2`  
