@@ -1,4 +1,4 @@
-package com.signavio.arch;
+package com.signavio.template;
 
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
@@ -12,11 +12,13 @@ public class NamingConventionsTest {
 	@ArchTest
 	static final ArchRule persistanceDtoNaming = classes().that()
 			.resideInAPackage("..persistence.dto..")
-			.should().haveSimpleNameEndingWith("Info");
+			.should().haveSimpleNameEndingWith("Info")
+			.orShould().haveSimpleNameEndingWith("Builder");
 	
 	@ArchTest
 	static final ArchRule restDtoNaming = classes().that()
 			.resideInAPackage("..rest.dto..")
-			.should().haveSimpleNameEndingWith("Resource");
+			.should().haveSimpleNameEndingWith("Resource")
+			.orShould().haveSimpleNameEndingWith("Builder");
 	
 }

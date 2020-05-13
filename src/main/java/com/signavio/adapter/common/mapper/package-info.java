@@ -3,4 +3,4 @@
  * <p>
  * Only interfaces are allowed here.
  */
-package com.signavio.application.mapper;
+package com.signavio.adapter.common.mapper;
