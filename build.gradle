@@ -32,6 +32,8 @@ sourceSets {
     testContract
 }
 
+mainClassName = "com.signavio.template.application.Application"
+
 // see https://youtrack.jetbrains.com/issue/IDEA-151925#focus=streamItem-27-2355076-0-0
 idea {
     module {

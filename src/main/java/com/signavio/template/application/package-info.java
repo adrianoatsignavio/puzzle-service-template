@@ -1,5 +1,5 @@
 /**
- * Here we should put classes which are web framework specific.
+ * Here we put necessary classes to create a stand-alone application
  * <p>
  * e.g. Application class for Spring Boot or Micronaut.
  */

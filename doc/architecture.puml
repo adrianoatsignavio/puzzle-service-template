@@ -7,10 +7,10 @@ package "Core" {
 
 package "Application" {
 	[AppStarter]
-	[mapper] as mapper
 }
 
 package "Adapters" {
+	[common] as common
 	frame "rest" {
 		[controller] as rest_controller
 		[mapper] as rest_mapper
@@ -36,9 +36,9 @@ rest_controller -up-> usecase
 publisher -up-> usecase
 persistance_repository -up-> usecase
 
-rest_mapper --> mapper
-persistance_mapper --> mapper
-messaging_mapper --> mapper
+rest_mapper --> common
+persistance_mapper --> common
+messaging_mapper --> common
 
 
 @enduml
