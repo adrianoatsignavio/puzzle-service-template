@@ -1,0 +1,111 @@
+plugins {
+    id "application"
+    id "idea"
+}
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+ext {
+    assertj_version = "3.16.0"
+    archUnit_version = "0.13.1"
+    junit_version = "5.6.2"
+    log4j_version = "2.13.2"
+    mockito_version = "3.3.3"
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    testInteg {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+    testArch {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+    testApi
+    testContract
+}
+
+mainClassName = "com.signavio.template.application.Application"
+
+// see https://youtrack.jetbrains.com/issue/IDEA-151925#focus=streamItem-27-2355076-0-0
+idea {
+    module {
+        testSourceDirs += project.sourceSets.testInteg.java.srcDirs
+        testSourceDirs += project.sourceSets.testContract.java.srcDirs
+        testSourceDirs += project.sourceSets.testArch.java.srcDirs
+        testSourceDirs += project.sourceSets.testApi.java.srcDirs
+    }
+}
+
+configurations {
+    testIntegImplementation.extendsFrom testImplementation
+    testIntegRuntime.extendsFrom testRuntimeOnly
+
+    testContractImplementation.extendsFrom testImplementation
+    testContractRuntime.extendsFrom testRuntimeOnly
+
+    testArchImplementation.extendsFrom testImplementation
+    testArchRuntime.extendsFrom testRuntimeOnly
+
+    testApiImplementation.extendsFrom testImplementation
+    testApiRuntime.extendsFrom testRuntimeOnly
+}
+
+
+dependencies {
+    implementation "org.apache.logging.log4j:log4j-api:${log4j_version}"
+    implementation "org.apache.logging.log4j:log4j-core:${log4j_version}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junit_version}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junit_version}"
+
+    testImplementation "org.assertj:assertj-core:${assertj_version}"
+    testArchImplementation "com.tngtech.archunit:archunit-junit5:${archUnit_version}"
+
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: "${mockito_version}"
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: "${mockito_version}"
+}
+
+task testInteg(type: Test) {
+    testClassesDirs = sourceSets.testInteg.output.classesDirs
+    classpath += sourceSets.testInteg.runtimeClasspath
+}
+
+task testArch(type: Test) {
+    testClassesDirs = sourceSets.testArch.output.classesDirs
+    classpath += sourceSets.testArch.runtimeClasspath
+}
+
+task testContract(type: Test) {
+    testClassesDirs = sourceSets.testContract.output.classesDirs
+    classpath += sourceSets.testContract.runtimeClasspath
+}
+
+task testApi(type: Test) {
+    testClassesDirs = sourceSets.testApi.output.classesDirs
+    classpath += sourceSets.testApi.runtimeClasspath
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+    testLogging {
+        exceptionFormat = 'FULL'
+        showStandardStreams = true
+        events 'FAILED', 'SKIPPED'
+    }
+    afterSuite { desc, result ->
+        if (!desc.parent) {
+            println "Test summary: ${result.testCount} tests, " +
+                    "${result.successfulTestCount} succeeded, " +
+                    "${result.failedTestCount} failed, " +
+                    "${result.skippedTestCount} skipped"
+        }
+    }
+}
