@@ -18,7 +18,9 @@ There is an example of ADR to follow similar structure for further ADRs.
   - mocking framework  
   
 # Configuration
-Line endings: `git config core.autocrlf input`
+- Line endings: `git config core.autocrlf input`
+- Rename a package from `com.signavio.template` to `com.signavio._your_service_topic_`
+
 
 # Important versions
 Gradle `6.2`  
@@ -55,6 +57,5 @@ Each adapter has at least following packages:
 # Open questions:
  - what is an alternative naming for persistence dto classes (something instead of *Info) 
  - Signavio id (standard for whole SPM? create a port for this id)  
- - com.signavio.template
  - How to be able to create tests in different configurations (api, contract, integ)
  
